@@ -9,5 +9,4 @@ public class TripMateV2Application {
     public static void main(String[] args) {
         SpringApplication.run(TripMateV2Application.class, args);
     }
-
 }

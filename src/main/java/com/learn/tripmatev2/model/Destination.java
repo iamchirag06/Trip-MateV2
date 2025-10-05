@@ -34,9 +34,6 @@ public class Destination {
     private List<DestinationActivity> activities;
 
     @OneToMany(mappedBy = "destination", cascade = CascadeType.ALL)
-    private List<HealthConsideration> healthConsiderations;
-
-    @OneToMany(mappedBy = "destination", cascade = CascadeType.ALL)
     private List<Recommendation> recommendations;
 
     @OneToMany(mappedBy = "destination", cascade = CascadeType.ALL)

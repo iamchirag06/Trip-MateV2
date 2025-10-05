@@ -5,6 +5,7 @@ import com.learn.tripmatev2.service.ActivityService;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
+// past events
 @RestController
 @RequestMapping("/api/activities")
 public class ActivityController {

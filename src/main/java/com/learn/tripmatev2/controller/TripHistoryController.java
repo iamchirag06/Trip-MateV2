@@ -6,6 +6,7 @@ import com.learn.tripmatev2.service.TripHistoryService;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
+//User Specific Trip History
 @RestController
 @RequestMapping("/api/trips")
 public class TripHistoryController {

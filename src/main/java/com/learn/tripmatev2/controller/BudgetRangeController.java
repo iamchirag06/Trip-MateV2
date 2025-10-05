@@ -5,6 +5,7 @@ import com.learn.tripmatev2.service.BudgetRangeService;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
+
 @RestController
 @RequestMapping("/api/budgets")
 public class BudgetRangeController {

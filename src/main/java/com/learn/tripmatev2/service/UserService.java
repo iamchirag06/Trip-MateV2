@@ -3,7 +3,6 @@ package com.learn.tripmatev2.service;
 import com.learn.tripmatev2.model.User;
 import com.learn.tripmatev2.repository.UserRepository;
 import org.springframework.stereotype.Service;
-import org.springframework.http.ResponseEntity;
 
 
 import java.util.List;
