@@ -1,0 +1,51 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:15-alpine
+    container_name: tripmate-postgres
+    environment:
+      POSTGRES_DB: tripmate
+      POSTGRES_USER: tripmate_user
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-changeme}
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U tripmate_user -d tripmate"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - tripmate-network
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: tripmate-app
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/tripmate
+      SPRING_DATASOURCE_USERNAME: tripmate_user
+      SPRING_DATASOURCE_PASSWORD: ${DB_PASSWORD:-changeme}
+      GOOGLE_CLIENT_ID: ${GOOGLE_CLIENT_ID}
+      GOOGLE_CLIENT_SECRET: ${GOOGLE_CLIENT_SECRET}
+      GITHUB_CLIENT_ID: ${GITHUB_CLIENT_ID}
+      GITHUB_CLIENT_SECRET: ${GITHUB_CLIENT_SECRET}
+      JWT_SECRET: ${JWT_SECRET}
+      LANDING_PAGE_URL: ${LANDING_PAGE_URL:-http://localhost:9090/login/oauth2/code/google}
+    ports:
+      - "9090:9090"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - tripmate-network
+
+volumes:
+  postgres_data:
+
+networks:
+  tripmate-network:
+    driver: bridge
