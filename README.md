@@ -4,6 +4,7 @@
 [![Java](https://img.shields.io/badge/Java-17-orange.svg)](https://www.java.com)
 [![Docker](https://img.shields.io/badge/Docker-Ready-blue.svg)](https://www.docker.com/)
 [![OAuth2](https://img.shields.io/badge/OAuth2-Authentication-green.svg)](https://oauth.net/2/)
+[![CI/CD](https://img.shields.io/badge/CI%2FCD-GitHub%20Actions-blue.svg)](https://github.com/iamchirag06/Trip-MateV2/actions)
 [![License](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
 > 🚀 A comprehensive Spring Boot application for managing travel-related activities, user preferences, and trip planning.
@@ -55,6 +56,7 @@ The application will be available at `http://localhost:9090`
   - AWS (Elastic Beanstalk & ECS)
   - Google Cloud Platform
   - Azure
+- ✅ [Deployment Checklist](DEPLOYMENT_CHECKLIST.md) - Pre and post-deployment checklist
 
 ## 🛠️ Technology Stack
 

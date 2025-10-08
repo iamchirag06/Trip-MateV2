@@ -428,6 +428,20 @@ docker exec trip-mate pg_isready -h postgres
 - 🐛 [Report Issues](https://github.com/iamchirag06/Trip-MateV2/issues)
 - 💬 [Discussions](https://github.com/iamchirag06/Trip-MateV2/discussions)
 
+### Known Issues
+
+#### Test Database Configuration
+
+The current test suite requires a PostgreSQL database connection. Running tests with `-DskipTests` is recommended for CI/CD builds until test database configuration is optimized for H2 in-memory database.
+
+```bash
+# Build without tests
+./mvnw clean package -DskipTests
+
+# Or use Docker which doesn't run tests
+docker build -t trip-mate:latest .
+```
+
 ## Monitoring and Maintenance
 
 ### Health Checks
