@@ -303,7 +303,60 @@ The repository includes a GitHub Actions workflow that automatically:
 
 ## Database Setup
 
-### PostgreSQL Setup
+### Option 1: Neon Database (Recommended for Production)
+
+[Neon](https://neon.tech) is a serverless PostgreSQL database platform that offers:
+- ✅ Automatic scaling and connection pooling
+- ✅ Built-in SSL security
+- ✅ Zero downtime migrations
+- ✅ Free tier available
+- ✅ Perfect for production deployments
+
+#### Setting up Neon Database
+
+1. **Create a Neon Account**
+   - Visit [https://neon.tech](https://neon.tech)
+   - Sign up for a free account
+   - Create a new project
+
+2. **Get Your Connection String**
+   - In your Neon project dashboard, find the connection string
+   - It will look like: `postgresql://[user]:[password]@[endpoint].neon.tech/[database]?sslmode=require`
+
+3. **Configure Environment Variables**
+   
+   Update your `.env` file or set environment variables:
+   ```bash
+   # Example Neon connection (replace with your actual values)
+   export SPRING_DATASOURCE_URL="jdbc:postgresql://ep-fancy-mode-xxx.pooler.c-2.us-east-1.aws.neon.tech/neondb?sslmode=require"
+   export SPRING_DATASOURCE_USERNAME="neondb_owner"
+   export SPRING_DATASOURCE_PASSWORD="your_neon_password"
+   ```
+
+4. **Connection Pooling**
+   
+   Neon provides connection pooling endpoints. Use the `-pooler` endpoint for best performance:
+   ```
+   jdbc:postgresql://your-endpoint-pooler.neon.tech/neondb?sslmode=require
+   ```
+
+5. **Deploy**
+   
+   The application is now configured to use Neon. Deploy as usual:
+   ```bash
+   ./mvnw clean package
+   java -jar target/Trip-MateV2-0.0.1-SNAPSHOT.jar
+   ```
+
+#### Neon Best Practices
+
+- **Use Connection Pooling**: Always use the `-pooler` endpoint in production
+- **SSL is Required**: Neon requires SSL connections (already configured)
+- **Environment Variables**: Never commit credentials - use environment variables
+- **Backups**: Neon automatically backs up your data
+- **Monitoring**: Use Neon's dashboard to monitor database performance
+
+### Option 2: Local PostgreSQL Setup
 
 1. **Install PostgreSQL**
    ```bash
