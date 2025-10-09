@@ -130,6 +130,38 @@ If you have existing data:
 - **Full Schema Documentation**: [DATABASE_SCHEMA.md](../DATABASE_SCHEMA.md)
 - **Detailed Changes**: [docs/DATABASE_REFINEMENT_SUMMARY.md](DATABASE_REFINEMENT_SUMMARY.md)
 - **Deprecated Files**: [docs/deprecated/README.md](deprecated/README.md)
+- **Neon Database Setup**: [docs/NEON_SETUP.md](NEON_SETUP.md)
+
+---
+
+## 🗄️ Database Options
+
+### Local Development
+Use Docker Compose for a quick PostgreSQL setup:
+```bash
+docker-compose up -d
+```
+
+### Production (Recommended: Neon)
+[Neon](https://neon.tech) - Serverless PostgreSQL with:
+- ✅ Automatic SSL/TLS encryption
+- ✅ Built-in connection pooling
+- ✅ Zero-downtime migrations
+- ✅ Automatic backups
+- ✅ Free tier available
+
+**Quick Setup:**
+```bash
+# Set environment variables
+export SPRING_DATASOURCE_URL="jdbc:postgresql://your-endpoint-pooler.neon.tech/neondb?sslmode=require"
+export SPRING_DATASOURCE_USERNAME="neondb_owner"
+export SPRING_DATASOURCE_PASSWORD="your_password"
+
+# Run application
+./mvnw spring-boot:run
+```
+
+See [NEON_SETUP.md](NEON_SETUP.md) for detailed instructions.
 
 ---
 
