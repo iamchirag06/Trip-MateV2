@@ -1,6 +1,5 @@
 package com.learn.tripmatev2.auth.config;
 
-import com.learn.tripmatev2.auth.service.CustomOAuth2UserService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
@@ -16,34 +15,19 @@ import java.util.List;
 
 @Configuration
 @EnableWebSecurity
-@Profile("!dev")
-public class SecurityConfig {
+@Profile("dev")
+public class TestSecurityConfig {
 
-    private final CustomOAuth2UserService customOAuth2UserService;
 
-    public SecurityConfig(CustomOAuth2UserService customOAuth2UserService) {
-        this.customOAuth2UserService = customOAuth2UserService;
-    }
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
             .cors(cors -> cors.configurationSource(corsConfigurationSource()))
-            .csrf(csrf -> csrf.disable());
-
-        http.authorizeHttpRequests(auth -> auth
-            .requestMatchers("/api/**", "/", "/error", "/auth/**", "/login/**", "/oauth2/**", "/actuator/**").permitAll()
-            .anyRequest().authenticated()
-        );
-
-        http.oauth2Login(oauth2 -> oauth2
-            .userInfoEndpoint(userInfo -> userInfo
-                .userService(customOAuth2UserService)
-            )
-            .loginPage("/login")
-            .defaultSuccessUrl("https://tripmatev2.netlify.app/home", true)
-            .failureUrl("/login?error=true")
-        );
+            .csrf(csrf -> csrf.disable())
+            .authorizeHttpRequests(auth -> auth
+                .anyRequest().permitAll()
+            );
 
         return http.build();
     }

@@ -8,6 +8,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 @Entity
 @Table(name = "destinations", indexes = {
     @Index(name = "idx_dest_country", columnList = "country"),
@@ -66,15 +68,19 @@ public class Destination {
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
+    @JsonManagedReference
     @OneToMany(mappedBy = "destination", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<DestinationAttribute> attributes = new ArrayList<>();
 
+    @JsonManagedReference
     @OneToMany(mappedBy = "destination", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<DestinationActivity> activities = new ArrayList<>();
 
+    @JsonManagedReference
     @OneToMany(mappedBy = "destination", cascade = CascadeType.ALL)
     private List<Recommendation> recommendations = new ArrayList<>();
 
+    @JsonManagedReference
     @OneToMany(mappedBy = "destination", cascade = CascadeType.ALL)
     private List<TripHistory> tripHistories = new ArrayList<>();
 

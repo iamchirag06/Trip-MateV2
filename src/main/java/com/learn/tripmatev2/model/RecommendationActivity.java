@@ -1,5 +1,6 @@
 package com.learn.tripmatev2.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import java.math.BigDecimal;
@@ -29,6 +30,7 @@ public class RecommendationActivity {
 
     private LocalDateTime createdAt;
 
+    @JsonBackReference
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "recommendation_id", nullable = false)
     private Recommendation recommendation;
