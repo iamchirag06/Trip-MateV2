@@ -6,7 +6,7 @@ This guide shows you exactly how to configure Trip-MateV2 with your Neon databas
 
 You provided this Neon JDBC connection string:
 ```
-jdbc:postgresql://ep-fancy-mode-adfwqkh9-pooler.c-2.us-east-1.aws.neon.tech/neondb?user=neondb_owner&password=npg_K5UG9mBJyYPW&sslmode=require&channelBinding=require
+jdbc:postgresql://ep-fancy-mode-adfwqkh9-pooler.c-2.us-east-1.aws.neon.tech/neondb?user={username}&password={password}&sslmode=require&channelBinding=require
 ```
 
 ## Breaking Down the Connection String
@@ -14,8 +14,8 @@ jdbc:postgresql://ep-fancy-mode-adfwqkh9-pooler.c-2.us-east-1.aws.neon.tech/neon
 From your connection string, we extract:
 - **Endpoint**: `ep-fancy-mode-adfwqkh9-pooler.c-2.us-east-1.aws.neon.tech`
 - **Database**: `neondb`
-- **Username**: `neondb_owner`
-- **Password**: `npg_K5UG9mBJyYPW`
+- **Username**: `DB_username`
+- **Password**: `DB_password`
 - **SSL Mode**: `require`
 
 Note: The `-pooler` in the endpoint means you're using the connection pooling endpoint, which is perfect for production! ✅
