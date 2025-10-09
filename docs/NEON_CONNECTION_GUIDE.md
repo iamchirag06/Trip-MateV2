@@ -136,7 +136,7 @@ Expected response:
     "db": {
       "status": "UP",
       "details": {
-        "database": "PostgreSQL"
+        "database": "Neon"
       }
     }
   }
@@ -155,7 +155,7 @@ spring.datasource.hikari.connection-timeout=30000
 ```
 
 ### SSL Support
-The PostgreSQL JDBC driver automatically supports SSL connections when `sslmode=require` is in the URL.
+The JDBC driver automatically supports SSL connections when `sslmode=require` is in the URL.
 
 ### Database Schema
 The application will automatically create the necessary tables on first run using Hibernate DDL auto-update.

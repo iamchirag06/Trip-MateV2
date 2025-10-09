@@ -137,13 +137,13 @@ If you have existing data:
 ## 🗄️ Database Options
 
 ### Local Development
-Use Docker Compose for a quick PostgreSQL setup:
+Use Docker Compose for a quick local database setup:
 ```bash
 docker-compose up -d
 ```
 
 ### Production (Recommended: Neon)
-[Neon](https://neon.tech) - Serverless PostgreSQL with:
+[Neon](https://neon.tech) - Serverless PostgreSQL-compatible database with:
 - ✅ Automatic SSL/TLS encryption
 - ✅ Built-in connection pooling
 - ✅ Zero-downtime migrations

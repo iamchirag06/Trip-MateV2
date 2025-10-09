@@ -1,6 +1,6 @@
 # 🚀 Neon Database Setup Guide
 
-This guide will help you set up Trip-MateV2 with [Neon](https://neon.tech) - a serverless PostgreSQL database platform.
+This guide will help you set up Trip-MateV2 with [Neon](https://neon.tech) - a serverless PostgreSQL-compatible database platform.
 
 ## Why Neon?
 
@@ -29,7 +29,7 @@ Neon is recommended for production deployments because it offers:
 3. Choose your project settings:
    - **Name**: Trip-MateV2
    - **Region**: Choose the region closest to your deployment
-   - **PostgreSQL Version**: 15 or later (recommended)
+   - **Database Version**: 15 or later (recommended)
 4. Click **"Create Project"**
 
 ### 2. Get Your Connection Details
@@ -283,9 +283,9 @@ curl http://your-app-url/actuator/health
 - ✅ Have a backup and recovery plan
 - ✅ Use database branching for testing
 
-## Migration from Local PostgreSQL
+## Migration from Local Database
 
-If you're migrating from local PostgreSQL to Neon:
+If you're migrating from a local database to Neon:
 
 ### 1. Export Data
 ```bash
@@ -308,7 +308,7 @@ Run the application and verify all data is accessible
 
 - [Neon Documentation](https://neon.tech/docs)
 - [Neon Community Forum](https://community.neon.tech)
-- [PostgreSQL JDBC Documentation](https://jdbc.postgresql.org/documentation/)
+- [PostgreSQL-compatible JDBC Documentation](https://jdbc.postgresql.org/documentation/)
 - [Spring Boot Database Documentation](https://docs.spring.io/spring-boot/docs/current/reference/html/data.html#data.sql.datasource)
 
 ## Support

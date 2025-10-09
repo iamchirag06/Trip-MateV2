@@ -14,7 +14,7 @@ This repository is now fully configured for deployment across multiple platforms
 
 2. **docker-compose.yml** - Complete stack deployment
    - Application container
-   - PostgreSQL database
+   - Local database for development
    - Volume management
    - Network configuration
 
@@ -104,12 +104,13 @@ java -jar target/Trip-MateV2-0.0.1-SNAPSHOT.jar
 ## 🌐 Deployment Platforms Supported
 
 ✅ **Docker** - Fully containerized with health checks
-✅ **Docker Compose** - Complete stack with PostgreSQL
+✅ **Docker Compose** - Complete stack with local database for development
 ✅ **Heroku** - Platform-as-a-Service deployment
 ✅ **AWS** - Elastic Beanstalk and ECS
 ✅ **Google Cloud Platform** - Cloud Run
 ✅ **Azure** - Container Instances
 ✅ **Local/VPS** - Traditional server deployment
+✅ **Neon DB** - Recommended serverless database for production
 
 ## 🔐 Security Features
 
@@ -149,7 +150,8 @@ Access health endpoints:
    - Update redirect URIs
 
 2. **Set Up Database**
-   - Create PostgreSQL database
+   - Create Neon Database account (recommended - see DEPLOYMENT.md)
+   - Or use Docker Compose for local development
    - Configure connection string
    - Set credentials
 
