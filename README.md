@@ -65,7 +65,7 @@ The application will be available at `http://localhost:9090`
 - **Spring Security** - Authentication & authorization
 - **OAuth2** - Social login (Google & GitHub)
 - **Spring Data JPA** - Data persistence
-- **PostgreSQL** - Primary database
+- **PostgreSQL** - Primary database (local or Neon cloud)
 - **Thymeleaf** - Server-side templates
 - **Docker** - Containerization
 - **Maven** - Dependency management
@@ -76,7 +76,7 @@ The application will be available at `http://localhost:9090`
 
 - Java JDK 17 or higher
 - Maven 3.6+ (or use included Maven wrapper)
-- PostgreSQL 12+ (or use Docker Compose)
+- PostgreSQL 12+ (local), Docker Compose, or [Neon Database](https://neon.tech) (recommended)
 - OAuth2 credentials from Google and GitHub
 
 ### Environment Variables
@@ -88,10 +88,14 @@ cp .env.example .env
 ```
 
 Configure the following:
-- Database connection details
+- Database connection details (local PostgreSQL or Neon cloud database)
 - Google OAuth2 credentials
 - GitHub OAuth2 credentials
 - JWT secret key
+
+#### Database Options:
+- **Local PostgreSQL**: Use Docker Compose (easiest for development)
+- **Neon Database**: Recommended for production - serverless PostgreSQL with built-in pooling and SSL
 
 See [DEPLOYMENT.md](DEPLOYMENT.md) for detailed configuration instructions.
 
