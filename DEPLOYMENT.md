@@ -25,7 +25,7 @@ Before deploying, ensure you have:
 - ✅ Java JDK 17 or higher
 - ✅ Maven 3.6 or higher (or use the included Maven wrapper)
 - ✅ Docker and Docker Compose (for containerized deployment)
-- ✅ PostgreSQL 12+ (for production)
+- ✅ [Neon Database](https://neon.tech) account (recommended for production)
 - ✅ Git
 - ✅ OAuth2 credentials from Google and GitHub
 
@@ -42,8 +42,8 @@ cp .env.example .env
 
 | Variable | Description | Example |
 |----------|-------------|---------|
-| `SPRING_DATASOURCE_URL` | PostgreSQL connection URL | `jdbc:postgresql://localhost:5432/tripmate` |
-| `SPRING_DATASOURCE_USERNAME` | Database username | `tripmate_user` |
+| `SPRING_DATASOURCE_URL` | Database connection URL (Neon DB recommended) | `jdbc:postgresql://ep-xxx.neon.tech/neondb?sslmode=require` |
+| `SPRING_DATASOURCE_USERNAME` | Database username | `neondb_owner` |
 | `SPRING_DATASOURCE_PASSWORD` | Database password | `your_secure_password` |
 | `GOOGLE_CLIENT_ID` | Google OAuth2 Client ID | `123456789-xxx.apps.googleusercontent.com` |
 | `GOOGLE_CLIENT_SECRET` | Google OAuth2 Client Secret | `GOCSPX-xxxxxxxxxxxx` |
@@ -78,7 +78,7 @@ java -jar target/Trip-MateV2-0.0.1-SNAPSHOT.jar
 
 ### Build and Run with Docker Compose
 
-The easiest way to deploy the entire stack (application + PostgreSQL):
+The easiest way to deploy with a local database for development:
 
 ```bash
 # Build and start all services
@@ -94,17 +94,19 @@ docker-compose down
 docker-compose down -v
 ```
 
+**Note:** For production deployments, use Neon Database instead of the local database container. See the [Database Setup](#database-setup) section below.
+
 ### Build Docker Image Manually
 
 ```bash
 # Build the image
 docker build -t trip-mate:latest .
 
-# Run the container
+# Run the container (with Neon DB connection)
 docker run -d \
   -p 9090:9090 \
-  -e SPRING_DATASOURCE_URL=jdbc:postgresql://host.docker.internal:5432/tripmate \
-  -e SPRING_DATASOURCE_USERNAME=tripmate_user \
+  -e SPRING_DATASOURCE_URL=jdbc:postgresql://ep-xxx.neon.tech/neondb?sslmode=require \
+  -e SPRING_DATASOURCE_USERNAME=neondb_owner \
   -e SPRING_DATASOURCE_PASSWORD=your_password \
   -e GOOGLE_CLIENT_ID=your_google_client_id \
   -e GOOGLE_CLIENT_SECRET=your_google_secret \
@@ -142,9 +144,16 @@ The Dockerfile uses multi-stage builds to minimize image size:
    heroku create your-app-name
    ```
 
-4. **Add PostgreSQL Add-on**
+4. **Configure Database**
    ```bash
-   heroku addons:create heroku-postgresql:essential-0
+   # Option 1: Use Neon Database (Recommended)
+   # Get your Neon connection string from https://neon.tech
+   heroku config:set SPRING_DATASOURCE_URL="jdbc:postgresql://ep-xxx.neon.tech/neondb?sslmode=require"
+   heroku config:set SPRING_DATASOURCE_USERNAME=neondb_owner
+   heroku config:set SPRING_DATASOURCE_PASSWORD=your_neon_password
+   
+   # Option 2: Use Heroku Postgres Add-on
+   # heroku addons:create heroku-postgres:essential-0
    ```
 
 5. **Set Environment Variables**
@@ -303,14 +312,15 @@ The repository includes a GitHub Actions workflow that automatically:
 
 ## Database Setup
 
-### Option 1: Neon Database (Recommended for Production)
+### Neon Database (Recommended)
 
-[Neon](https://neon.tech) is a serverless PostgreSQL database platform that offers:
+[Neon](https://neon.tech) is a serverless PostgreSQL-compatible database platform that offers:
 - ✅ Automatic scaling and connection pooling
 - ✅ Built-in SSL security
 - ✅ Zero downtime migrations
 - ✅ Free tier available
-- ✅ Perfect for production deployments
+- ✅ Perfect for both development and production deployments
+- ✅ No local database installation required
 
 #### Setting up Neon Database
 
@@ -356,9 +366,17 @@ The repository includes a GitHub Actions workflow that automatically:
 - **Backups**: Neon automatically backs up your data
 - **Monitoring**: Use Neon's dashboard to monitor database performance
 
-### Option 2: Local PostgreSQL Setup
+### Local Development Database (Optional)
 
-1. **Install PostgreSQL**
+If you prefer to use a local database for development (not recommended for production):
+
+1. **Use Docker Compose**
+   ```bash
+   # The included docker-compose.yml provides a local database
+   docker-compose up -d
+   ```
+
+2. **Or Install Database Locally**
    ```bash
    # Ubuntu/Debian
    sudo apt-get install postgresql postgresql-contrib
@@ -380,6 +398,8 @@ The repository includes a GitHub Actions workflow that automatically:
    export SPRING_DATASOURCE_USERNAME=tripmate_user
    export SPRING_DATASOURCE_PASSWORD=your_password
    ```
+
+**Note:** For production deployments, always use Neon Database instead of local database installations.
 
 ## OAuth2 Configuration
 
@@ -425,14 +445,18 @@ server.port=8080
 
 #### 2. Database connection errors
 
-**Problem**: Cannot connect to PostgreSQL
+**Problem**: Cannot connect to database
 
 **Solution**:
 ```bash
-# Check if PostgreSQL is running
+# For Neon DB: Verify your connection string and credentials
+# Check that sslmode=require is included in the URL
+
+# For local database (development only):
+# Check if database is running
 sudo systemctl status postgresql
 
-# Start PostgreSQL if not running
+# Start database if not running
 sudo systemctl start postgresql
 
 # Verify connection
@@ -471,7 +495,7 @@ docker logs trip-mate
 # Verify actuator endpoint
 curl http://localhost:9090/actuator/health
 
-# Ensure database is accessible
+# Ensure database is accessible (for local database only)
 docker exec trip-mate pg_isready -h postgres
 ```
 
@@ -485,7 +509,7 @@ docker exec trip-mate pg_isready -h postgres
 
 #### Test Database Configuration
 
-The current test suite requires a PostgreSQL database connection. Running tests with `-DskipTests` is recommended for CI/CD builds until test database configuration is optimized for H2 in-memory database.
+The current test suite requires a database connection. Running tests with `-DskipTests` is recommended for CI/CD builds until test database configuration is optimized for H2 in-memory database.
 
 ```bash
 # Build without tests
@@ -528,7 +552,9 @@ tail -f logs/spring.log
 ### Backup Database
 
 ```bash
-# PostgreSQL backup
+# For Neon DB: Use Neon's built-in backup features via the dashboard
+
+# For local database (development only):
 pg_dump -U tripmate_user tripmate > backup.sql
 
 # Restore

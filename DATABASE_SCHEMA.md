@@ -376,7 +376,7 @@ All foreign keys are indexed for efficient joins. Additional indexes are placed 
 
 ## Database Technology
 
-- **DBMS**: PostgreSQL 12+ (Production), H2 (Testing)
+- **DBMS**: Neon DB (PostgreSQL-compatible, Production), H2 (Testing)
 - **ORM**: Hibernate via Spring Data JPA
 - **Schema Management**: `spring.jpa.hibernate.ddl-auto=update`
 

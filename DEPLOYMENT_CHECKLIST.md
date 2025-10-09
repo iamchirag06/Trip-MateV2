@@ -7,7 +7,7 @@ Use this checklist to ensure a successful deployment of Trip-MateV2.
 ### ✅ Environment Setup
 - [ ] Java 17+ installed (for local development)
 - [ ] Docker installed (for containerized deployment)
-- [ ] PostgreSQL 12+ installed/available (or use Docker Compose)
+- [ ] Neon Database account (recommended) or Docker Compose for local development
 - [ ] Git installed
 - [ ] Maven 3.6+ installed (or use included Maven wrapper)
 
@@ -22,9 +22,9 @@ Use this checklist to ensure a successful deployment of Trip-MateV2.
   - [ ] Redirect URI added: `https://yourdomain.com/login/oauth2/code/github`
 
 ### ✅ Database Setup
-- [ ] PostgreSQL database created
-- [ ] Database user created with appropriate permissions
-- [ ] Connection string prepared
+- [ ] Neon Database project created (recommended - see DEPLOYMENT.md)
+- [ ] Database user credentials obtained
+- [ ] Connection string prepared (with SSL enabled)
 - [ ] Database credentials secured
 
 ### ✅ Environment Variables
@@ -54,7 +54,7 @@ Choose one deployment method:
 - [ ] Heroku CLI installed
 - [ ] Heroku account created
 - [ ] App created: `heroku create your-app-name`
-- [ ] PostgreSQL add-on: `heroku addons:create heroku-postgresql`
+- [ ] Database configured (Neon recommended or Heroku Postgres)
 - [ ] Environment variables set via `heroku config:set`
 - [ ] Deploy: `git push heroku master`
 - [ ] Open app: `heroku open`
@@ -81,7 +81,7 @@ Choose one deployment method:
 - [ ] Container instance deployed
 
 ### Option 6: Local/VPS Deployment
-- [ ] Server with Java 17+ and PostgreSQL
+- [ ] Server with Java 17+ and Neon DB connection
 - [ ] Application built: `./mvnw clean package -DskipTests`
 - [ ] JAR copied to server
 - [ ] Environment variables configured

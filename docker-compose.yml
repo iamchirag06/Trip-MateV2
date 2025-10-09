@@ -1,6 +1,6 @@
 services:
-  # Local PostgreSQL for development
-  # For production, consider using Neon Database (https://neon.tech)
+  # Local database for development only
+  # For production, use Neon Database (https://neon.tech) - a serverless PostgreSQL-compatible platform
   # See DEPLOYMENT.md for Neon setup instructions
   postgres:
     image: postgres:15-alpine
