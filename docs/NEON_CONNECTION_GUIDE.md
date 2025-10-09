@@ -32,9 +32,9 @@ Note: The `-pooler` in the endpoint means you're using the connection pooling en
 2. Edit `.env` and update the database section:
    ```bash
    # Database Configuration
-   SPRING_DATASOURCE_URL=jdbc:postgresql://ep-fancy-mode-adfwqkh9-pooler.c-2.us-east-1.aws.neon.tech/neondb?sslmode=require
-   SPRING_DATASOURCE_USERNAME=neondb_owner
-   SPRING_DATASOURCE_PASSWORD=npg_K5UG9mBJyYPW
+   SPRING_DATASOURCE_URL=SPRING_DATASOURCE_URL
+   SPRING_DATASOURCE_USERNAME=your_neon_DB_username
+   SPRING_DATASOURCE_PASSWORD=your_neon_DB_Password
    ```
 
 3. Configure OAuth2 and JWT settings (required):
@@ -64,9 +64,9 @@ Note: The `-pooler` in the endpoint means you're using the connection pooling en
 Set environment variables directly in your terminal:
 
 ```bash
-export SPRING_DATASOURCE_URL="jdbc:postgresql://ep-fancy-mode-adfwqkh9-pooler.c-2.us-east-1.aws.neon.tech/neondb?sslmode=require"
-export SPRING_DATASOURCE_USERNAME="neondb_owner"
-export SPRING_DATASOURCE_PASSWORD="npg_K5UG9mBJyYPW"
+export SPRING_DATASOURCE_URL="source_url"
+export SPRING_DATASOURCE_USERNAME="username"
+export SPRING_DATASOURCE_PASSWORD="password"
 
 # Also set OAuth2 and JWT variables
 export GOOGLE_CLIENT_ID="your_google_client_id"
@@ -83,9 +83,9 @@ export LANDING_PAGE_URL="http://localhost:9090/login/oauth2/code/google"
 ### Option 3: For Heroku Deployment
 
 ```bash
-heroku config:set SPRING_DATASOURCE_URL="jdbc:postgresql://ep-fancy-mode-adfwqkh9-pooler.c-2.us-east-1.aws.neon.tech/neondb?sslmode=require"
-heroku config:set SPRING_DATASOURCE_USERNAME="neondb_owner"
-heroku config:set SPRING_DATASOURCE_PASSWORD="npg_K5UG9mBJyYPW"
+heroku config:set SPRING_DATASOURCE_URL="source_url"
+heroku config:set SPRING_DATASOURCE_USERNAME="username"
+heroku config:set SPRING_DATASOURCE_PASSWORD="password"
 
 # Also set OAuth2 and JWT variables
 heroku config:set GOOGLE_CLIENT_ID="your_google_client_id"
@@ -100,9 +100,9 @@ heroku config:set LANDING_PAGE_URL="https://your-app.herokuapp.com/login/oauth2/
 
 ```bash
 docker run -d \
-  -e SPRING_DATASOURCE_URL="jdbc:postgresql://ep-fancy-mode-adfwqkh9-pooler.c-2.us-east-1.aws.neon.tech/neondb?sslmode=require" \
-  -e SPRING_DATASOURCE_USERNAME="neondb_owner" \
-  -e SPRING_DATASOURCE_PASSWORD="npg_K5UG9mBJyYPW" \
+  -e SPRING_DATASOURCE_URL="source_url" \
+  -e SPRING_DATASOURCE_USERNAME="username" \
+  -e SPRING_DATASOURCE_PASSWORD="password" \
   -e GOOGLE_CLIENT_ID="your_google_client_id" \
   -e GOOGLE_CLIENT_SECRET="your_google_client_secret" \
   -e GITHUB_CLIENT_ID="your_github_client_id" \
