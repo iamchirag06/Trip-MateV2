@@ -2,7 +2,7 @@
 # This Dockerfile is optimized for Render.com deployment
 # It uses the local build approach which works better with Render's build environment
 
-FROM eclipse-temurin:17-jre-alpine
+FROM eclipse-temurin:21-jre-alpine
 
 WORKDIR /app
 
@@ -24,5 +24,9 @@ EXPOSE 9090
 HEALTHCHECK --interval=30s --timeout=3s --start-period=40s --retries=3 \
   CMD wget --no-verbose --tries=1 --spider http://localhost:9090/actuator/health || exit 1
 
+# Set Java options for container environment
+# These settings are optimized for Render's environment
+ENV JAVA_OPTS="-Xmx400m -Xms200m -XX:+UseContainerSupport -XX:MaxRAMPercentage=75.0 -Djava.security.egd=file:/dev/./urandom"
+
 # Run the application
-ENTRYPOINT ["java", "-jar", "app.jar"]
+ENTRYPOINT exec java $JAVA_OPTS -jar app.jar

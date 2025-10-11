@@ -1,6 +1,6 @@
 # Multi-stage build for optimized image size
 # Use a Debian-based image for build to avoid SSL issues
-FROM maven:3.9-eclipse-temurin-17-focal AS build
+FROM maven:3.9-eclipse-temurin-21-jammy AS build
 
 WORKDIR /app
 
@@ -15,7 +15,7 @@ COPY src ./src
 RUN mvn clean package -DskipTests
 
 # Runtime stage
-FROM eclipse-temurin:17-jre-alpine
+FROM eclipse-temurin:21-jre-alpine
 
 WORKDIR /app
 

@@ -1,9 +1,9 @@
 services:
   - type: web
     name: trip-mate-v2
-    env: java
-    buildCommand: ./mvnw clean package -DskipTests
-    startCommand: java -Xmx400m -jar target/Trip-MateV2-0.0.1-SNAPSHOT.jar
+    env: docker
+    dockerfilePath: Dockerfile.render
+    dockerContext: .
     envVars:
       - key: SPRING_PROFILES_ACTIVE
         value: prod

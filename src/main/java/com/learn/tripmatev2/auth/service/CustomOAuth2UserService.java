@@ -5,7 +5,10 @@ import com.learn.tripmatev2.auth.user.OAuth2UserInfo;
 import com.learn.tripmatev2.auth.user.OAuth2UserInfoFactory;
 import com.learn.tripmatev2.auth.user.UserPrincipal;
 import com.learn.tripmatev2.model.User;
+import com.learn.tripmatev2.model.UserAuthLog;
 import com.learn.tripmatev2.repository.UserRepository;
+import com.learn.tripmatev2.repository.UserAuthLogRepository;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.InternalAuthenticationServiceException;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
@@ -21,6 +24,12 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private UserAuthLogRepository userAuthLogRepository;
+
+    @Autowired(required = false)
+    private HttpServletRequest request;
 
     @Override
     public OAuth2User loadUser(OAuth2UserRequest oAuth2UserRequest) throws OAuth2AuthenticationException {
@@ -39,6 +48,10 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
                 oAuth2User.getAttributes()
         );
 
+        String ipAddress = getClientIp();
+        String userAgent = request != null ? request.getHeader("User-Agent") : "unknown";
+        AuthProvider provider = AuthProvider.valueOf(oAuth2UserRequest.getClientRegistration().getRegistrationId().toUpperCase());
+
         Optional<User> userOptional = userRepository.findByEmail(oAuth2UserInfo.getEmail());
         User user;
 
@@ -52,7 +65,22 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
             user = registerNewUser(oAuth2UserRequest, oAuth2UserInfo);
         }
 
+        // Log the authentication
+        UserAuthLog authLog = new UserAuthLog(user, provider, ipAddress, userAgent, true);
+        userAuthLogRepository.save(authLog);
+
         return UserPrincipal.create(user, oAuth2User.getAttributes());
+    }
+
+    private String getClientIp() {
+        if (request == null) {
+            return "unknown";
+        }
+        String xForwardedFor = request.getHeader("X-Forwarded-For");
+        if (xForwardedFor != null && !xForwardedFor.isEmpty()) {
+            return xForwardedFor.split(",")[0].trim();
+        }
+        return request.getRemoteAddr();
     }
 
     private User registerNewUser(OAuth2UserRequest oAuth2UserRequest, OAuth2UserInfo oAuth2UserInfo) {

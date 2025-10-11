@@ -16,7 +16,7 @@ import java.util.List;
 
 @Configuration
 @EnableWebSecurity
-@Profile("!dev")
+@Profile({"dev", "prod"})
 public class SecurityConfig {
 
     private final CustomOAuth2UserService customOAuth2UserService;
@@ -32,7 +32,8 @@ public class SecurityConfig {
             .csrf(csrf -> csrf.disable());
 
         http.authorizeHttpRequests(auth -> auth
-            .requestMatchers("/api/**", "/", "/error", "/auth/**", "/login/**", "/oauth2/**", "/actuator/**").permitAll()
+            .requestMatchers("/api/**", "/", "/error", "/auth/**", "/login/**", "/oauth2/**", "/actuator/**", 
+                           "/css/**", "/js/**", "/images/**", "/webjars/**", "/favicon.ico", "/static/**").permitAll()
             .anyRequest().authenticated()
         );
 
@@ -41,8 +42,18 @@ public class SecurityConfig {
                 .userService(customOAuth2UserService)
             )
             .loginPage("/login")
-            .defaultSuccessUrl("https://tripmatev2.netlify.app/home", true)
+            .defaultSuccessUrl("/", true)
             .failureUrl("/login?error=true")
+            .successHandler((request, response, authentication) -> {
+                // Log success
+                System.out.println("Authentication successful for user: " + authentication.getName());
+                response.sendRedirect("/");
+            })
+            .failureHandler((request, response, exception) -> {
+                // Log failure
+                System.out.println("Authentication failed: " + exception.getMessage());
+                response.sendRedirect("/login?error=" + exception.getMessage());
+            })
         );
 
         return http.build();
