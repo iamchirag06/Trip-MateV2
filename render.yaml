@@ -1,0 +1,28 @@
+services:
+  - type: web
+    name: trip-mate-v2
+    env: java
+    buildCommand: ./mvnw clean package -DskipTests
+    startCommand: java -Xmx400m -jar target/Trip-MateV2-0.0.1-SNAPSHOT.jar
+    envVars:
+      - key: SPRING_PROFILES_ACTIVE
+        value: prod
+      - key: SPRING_DATASOURCE_URL
+        sync: false
+      - key: SPRING_DATASOURCE_USERNAME
+        sync: false
+      - key: SPRING_DATASOURCE_PASSWORD
+        sync: false
+      - key: GOOGLE_CLIENT_ID
+        sync: false
+      - key: GOOGLE_CLIENT_SECRET
+        sync: false
+      - key: GITHUB_CLIENT_ID
+        sync: false
+      - key: GITHUB_CLIENT_SECRET
+        sync: false
+      - key: JWT_SECRET
+        sync: false
+      - key: LANDING_PAGE_URL
+        sync: false
+    healthCheckPath: /actuator/health
