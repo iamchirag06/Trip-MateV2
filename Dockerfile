@@ -1,17 +1,21 @@
 # Multi-stage build for optimized image size
-FROM maven:3.9-eclipse-temurin-17-alpine AS build
+# Use a Debian-based image for build to avoid SSL issues
+FROM maven:3.9-eclipse-temurin-21-jammy AS build
 
 WORKDIR /app
 
-# Copy project files
+# Copy pom.xml and download dependencies
 COPY pom.xml .
+RUN mvn dependency:go-offline -B || true
+
+# Copy source code
 COPY src ./src
 
 # Build the application
 RUN mvn clean package -DskipTests
 
 # Runtime stage
-FROM eclipse-temurin:17-jre-alpine
+FROM eclipse-temurin:21-jre-alpine
 
 WORKDIR /app
 

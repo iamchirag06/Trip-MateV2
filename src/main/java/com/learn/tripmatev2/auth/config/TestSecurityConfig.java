@@ -15,7 +15,7 @@ import java.util.List;
 
 @Configuration
 @EnableWebSecurity
-@Profile("dev")
+@Profile("test")
 public class TestSecurityConfig {
 
 
