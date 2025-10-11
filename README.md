@@ -56,7 +56,12 @@ The application will be available at `http://localhost:9090`
   - AWS (Elastic Beanstalk & ECS)
   - Google Cloud Platform
   - Azure
+- ⚡ [Quick Start: Render](QUICK_START_RENDER.md) - **Deploy to Render in 8 minutes**
+- 🎯 [Render Deployment Guide](docs/RENDER_DEPLOYMENT.md) - Complete Render.com deployment guide
 - ✅ [Deployment Checklist](DEPLOYMENT_CHECKLIST.md) - Pre and post-deployment checklist
+- 🧪 [Backend Testing Report](BACKEND_TESTING_REPORT.md) - Test coverage and validation results
+- 🗄️ [Neon Database Setup](docs/NEON_SETUP.md) - Neon PostgreSQL setup guide
+- 📊 [Database Schema](DATABASE_SCHEMA.md) - Complete database schema documentation
 
 ## 🛠️ Technology Stack
 
