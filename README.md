@@ -48,10 +48,14 @@ The API will be available at `http://localhost:9090`
 mvn spring-boot:run
 ```
 
+**📖 For detailed setup instructions, see [QUICK_START_API.md](QUICK_START_API.md)**
+
 ## 📚 Documentation
 
+- 🚀 [**Quick Start Guide**](QUICK_START_API.md) - **Complete setup instructions**
 - 📋 [**Endpoints List**](ENDPOINTS.md) - **Quick reference to all API endpoints**
-- 📖 [API Documentation](API%20Documentation.md) - Complete API reference with all endpoints
+- 📖 [API Documentation](API%20Documentation.md) - Complete API reference with examples
+- 📊 [Database Schema](DATABASE_SCHEMA.md) - Complete database schema documentation
 - 🚀 [Deployment Guide](DEPLOYMENT.md) - Deployment instructions for various platforms
   - Docker & Docker Compose
   - Heroku
