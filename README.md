@@ -50,6 +50,7 @@ mvn spring-boot:run
 
 ## 📚 Documentation
 
+- 📋 [**Endpoints List**](ENDPOINTS.md) - **Quick reference to all API endpoints**
 - 📖 [API Documentation](API%20Documentation.md) - Complete API reference with all endpoints
 - 🚀 [Deployment Guide](DEPLOYMENT.md) - Deployment instructions for various platforms
   - Docker & Docker Compose
