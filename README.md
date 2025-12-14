@@ -44,7 +44,7 @@ The API will be available at `http://localhost:9090`
 ### Local Development
 
 ```bash
-# Ensure Java 21+ and Maven are installed
+# Ensure Java 17+ and Maven are installed
 mvn spring-boot:run
 ```
 
