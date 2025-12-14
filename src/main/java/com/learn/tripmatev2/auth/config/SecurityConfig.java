@@ -4,8 +4,9 @@ import com.learn.tripmatev2.auth.handler.OAuth2AuthenticationFailureHandler;
 import com.learn.tripmatev2.auth.handler.OAuth2AuthenticationSuccessHandler;
 import com.learn.tripmatev2.auth.service.CustomOAuth2UserService;
 import com.learn.tripmatev2.auth.token.JwtAuthenticationEntryPoint;
+import com.learn.tripmatev2.auth.token.JwtTokenProvider;
 import com.learn.tripmatev2.auth.token.TokenAuthenticationFilter;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.learn.tripmatev2.repository.UserRepository;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
@@ -26,21 +27,30 @@ import java.util.List;
 @Profile({"dev", "prod"})
 public class SecurityConfig {
 
-    @Autowired
-    private JwtAuthenticationEntryPoint unauthorizedHandler;
-    
-    @Autowired
-    private CustomOAuth2UserService customOAuth2UserService;
-    
-    @Autowired
-    private OAuth2AuthenticationSuccessHandler oAuth2AuthenticationSuccessHandler;
-    
-    @Autowired
-    private OAuth2AuthenticationFailureHandler oAuth2AuthenticationFailureHandler;
+    private final JwtAuthenticationEntryPoint unauthorizedHandler;
+    private final CustomOAuth2UserService customOAuth2UserService;
+    private final OAuth2AuthenticationSuccessHandler oAuth2AuthenticationSuccessHandler;
+    private final OAuth2AuthenticationFailureHandler oAuth2AuthenticationFailureHandler;
+    private final JwtTokenProvider jwtTokenProvider;
+    private final UserRepository userRepository;
+
+    public SecurityConfig(JwtAuthenticationEntryPoint unauthorizedHandler,
+                         CustomOAuth2UserService customOAuth2UserService,
+                         OAuth2AuthenticationSuccessHandler oAuth2AuthenticationSuccessHandler,
+                         OAuth2AuthenticationFailureHandler oAuth2AuthenticationFailureHandler,
+                         JwtTokenProvider jwtTokenProvider,
+                         UserRepository userRepository) {
+        this.unauthorizedHandler = unauthorizedHandler;
+        this.customOAuth2UserService = customOAuth2UserService;
+        this.oAuth2AuthenticationSuccessHandler = oAuth2AuthenticationSuccessHandler;
+        this.oAuth2AuthenticationFailureHandler = oAuth2AuthenticationFailureHandler;
+        this.jwtTokenProvider = jwtTokenProvider;
+        this.userRepository = userRepository;
+    }
 
     @Bean
     public TokenAuthenticationFilter tokenAuthenticationFilter() {
-        return new TokenAuthenticationFilter();
+        return new TokenAuthenticationFilter(jwtTokenProvider, userRepository);
     }
 
     @Bean
