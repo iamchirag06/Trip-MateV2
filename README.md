@@ -11,7 +11,8 @@
 
 ## ✨ Features
 
-- 🔐 **OAuth2 Authentication** - Secure login with Google and GitHub
+- 🔐 **JWT Authentication** - Secure API authentication with JWT tokens
+- 🔑 **OAuth2 Support** - Backend OAuth2 integration with Google and GitHub (returns JWT tokens)
 - 👤 **User Management** - Complete user profile and preferences system
 - 🗺️ **Trip Planning** - Create and manage trip histories
 - 🎯 **Activity Management** - Track and organize travel activities
@@ -68,10 +69,10 @@ The application will be available at `http://localhost:9090`
 - **Java 17** - Core backend development
 - **Spring Boot 3.5** - Application framework
 - **Spring Security** - Authentication & authorization
-- **OAuth2** - Social login (Google & GitHub)
+- **JWT** - JSON Web Token for stateless authentication
+- **OAuth2** - Social login integration (Google & GitHub) for backend token generation
 - **Spring Data JPA** - Data persistence
 - **Neon DB** - Serverless PostgreSQL-compatible database (primary)
-- **Thymeleaf** - Server-side templates
 - **Docker** - Containerization
 - **Maven** - Dependency management
 
@@ -135,6 +136,8 @@ docker-compose down
 
 ## 🔐 OAuth2 Setup
 
+This application uses OAuth2 **for backend token generation only**. The OAuth2 flow returns JWT tokens in JSON format (no HTML redirects). External applications should use these tokens for subsequent API calls via the `Authorization: Bearer <token>` header.
+
 ### Google OAuth2
 
 1. Visit [Google Cloud Console](https://console.cloud.google.com/)
@@ -153,14 +156,42 @@ docker-compose down
    - Development: `http://localhost:9090/login/oauth2/code/github`
    - Production: `https://yourdomain.com/login/oauth2/code/github`
 
+### Authentication Flow
+
+1. **OAuth2 Login**: Initiate OAuth2 flow via `/oauth2/authorization/google` or `/oauth2/authorization/github`
+2. **Receive JWT**: After successful authentication, receive a JSON response with JWT token:
+   ```json
+   {
+     "success": true,
+     "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
+     "tokenType": "Bearer",
+     "user": {
+       "id": 1,
+       "email": "user@example.com",
+       "authorities": [{"authority": "ROLE_USER"}]
+     }
+   }
+   ```
+3. **Use JWT**: Include the token in all API requests:
+   ```bash
+   curl -H "Authorization: Bearer <token>" http://localhost:9090/api/users
+   ```
+2. Create a new OAuth App
+3. Configure callback URL:
+   - Development: `http://localhost:9090/login/oauth2/code/github`
+   - Production: `https://yourdomain.com/login/oauth2/code/github`
+
 ## 📊 API Endpoints
 
 ### Authentication
-- `GET /login` - Login page
-- `GET /api/test/public` - Public endpoint
-- `GET /api/test/private` - Protected endpoint
+- `GET /oauth2/authorization/google` - Initiate Google OAuth2 authentication (returns JWT in JSON)
+- `GET /oauth2/authorization/github` - Initiate GitHub OAuth2 authentication (returns JWT in JSON)
+- `GET /auth/user` - Get current authenticated user info (requires JWT token)
 
-### Resources
+### Health Check
+- `GET /actuator/health` - Public health check endpoint (no authentication required)
+
+### Protected Resources (require JWT token via `Authorization: Bearer <token>` header)
 - `/api/users` - User management
 - `/api/preferences` - User preferences
 - `/api/trips` - Trip history

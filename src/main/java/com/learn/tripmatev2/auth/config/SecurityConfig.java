@@ -1,5 +1,8 @@
 package com.learn.tripmatev2.auth.config;
 
+import com.learn.tripmatev2.auth.handler.OAuth2AuthenticationFailureHandler;
+import com.learn.tripmatev2.auth.handler.OAuth2AuthenticationSuccessHandler;
+import com.learn.tripmatev2.auth.service.CustomOAuth2UserService;
 import com.learn.tripmatev2.auth.token.JwtAuthenticationEntryPoint;
 import com.learn.tripmatev2.auth.token.TokenAuthenticationFilter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +28,15 @@ public class SecurityConfig {
 
     @Autowired
     private JwtAuthenticationEntryPoint unauthorizedHandler;
+    
+    @Autowired
+    private CustomOAuth2UserService customOAuth2UserService;
+    
+    @Autowired
+    private OAuth2AuthenticationSuccessHandler oAuth2AuthenticationSuccessHandler;
+    
+    @Autowired
+    private OAuth2AuthenticationFailureHandler oAuth2AuthenticationFailureHandler;
 
     @Bean
     public TokenAuthenticationFilter tokenAuthenticationFilter() {
@@ -44,9 +56,18 @@ public class SecurityConfig {
             );
 
         http.authorizeHttpRequests(auth -> auth
-            .requestMatchers("/actuator/health", "/error").permitAll()
+            .requestMatchers("/actuator/health", "/error", "/oauth2/**", "/login/oauth2/**").permitAll()
             .requestMatchers("/api/**").authenticated()
             .anyRequest().authenticated()
+        );
+
+        // OAuth2 login configuration that returns JSON
+        http.oauth2Login(oauth2 -> oauth2
+            .userInfoEndpoint(userInfo -> userInfo
+                .userService(customOAuth2UserService)
+            )
+            .successHandler(oAuth2AuthenticationSuccessHandler)
+            .failureHandler(oAuth2AuthenticationFailureHandler)
         );
 
         http.addFilterBefore(tokenAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
