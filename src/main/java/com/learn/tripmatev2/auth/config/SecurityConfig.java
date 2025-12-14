@@ -32,8 +32,7 @@ public class SecurityConfig {
             .csrf(csrf -> csrf.disable());
 
         http.authorizeHttpRequests(auth -> auth
-            .requestMatchers("/api/**", "/", "/error", "/auth/**", "/login/**", "/oauth2/**", "/actuator/**", 
-                           "/css/**", "/js/**", "/images/**", "/webjars/**", "/favicon.ico", "/static/**").permitAll()
+            .requestMatchers("/api/**", "/error", "/auth/**", "/oauth2/**", "/actuator/**").permitAll()
             .anyRequest().authenticated()
         );
 
@@ -41,19 +40,6 @@ public class SecurityConfig {
             .userInfoEndpoint(userInfo -> userInfo
                 .userService(customOAuth2UserService)
             )
-            .loginPage("/login")
-            .defaultSuccessUrl("/", true)
-            .failureUrl("/login?error=true")
-            .successHandler((request, response, authentication) -> {
-                // Log success
-                System.out.println("Authentication successful for user: " + authentication.getName());
-                response.sendRedirect("/");
-            })
-            .failureHandler((request, response, exception) -> {
-                // Log failure
-                System.out.println("Authentication failed: " + exception.getMessage());
-                response.sendRedirect("/login?error=" + exception.getMessage());
-            })
         );
 
         return http.build();
@@ -62,9 +48,9 @@ public class SecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(List.of("https://tripmatev2.netlify.app", "http://localhost:3000"));
+        configuration.setAllowedOriginPatterns(List.of("*")); // Allow all origins - configure based on your needs
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
-        configuration.setAllowedHeaders(Arrays.asList("Authorization", "Content-Type"));
+        configuration.setAllowedHeaders(Arrays.asList("*"));
         configuration.setAllowCredentials(true);
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();

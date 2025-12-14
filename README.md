@@ -1,23 +1,24 @@
-# 🌎 Trip-MateV2
+# 🌎 Trip-MateV2 - Backend API
 
 [![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.5-brightgreen.svg)](https://spring.io/projects/spring-boot)
-[![Java](https://img.shields.io/badge/Java-17-orange.svg)](https://www.java.com)
+[![Java](https://img.shields.io/badge/Java-21-orange.svg)](https://www.java.com)
 [![Docker](https://img.shields.io/badge/Docker-Ready-blue.svg)](https://www.docker.com/)
 [![OAuth2](https://img.shields.io/badge/OAuth2-Authentication-green.svg)](https://oauth.net/2/)
 [![CI/CD](https://img.shields.io/badge/CI%2FCD-GitHub%20Actions-blue.svg)](https://github.com/iamchirag06/Trip-MateV2/actions)
 [![License](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
-> 🚀 A comprehensive Spring Boot application for managing travel-related activities, user preferences, and trip planning.
+> 🚀 A comprehensive RESTful backend API service for managing travel-related activities, user preferences, and trip planning.
 
 ## ✨ Features
 
-- 🔐 **OAuth2 Authentication** - Secure login with Google and GitHub
+- 🔐 **OAuth2 Authentication** - Secure API authentication with Google and GitHub
 - 👤 **User Management** - Complete user profile and preferences system
 - 🗺️ **Trip Planning** - Create and manage trip histories
 - 🎯 **Activity Management** - Track and organize travel activities
 - 🌍 **Destination Catalog** - Browse and manage destinations
 - 💰 **Budget Management** - Plan trips within budget ranges
 - 💡 **Smart Recommendations** - Get personalized travel suggestions
+- 🔌 **RESTful API** - Complete REST API for all operations
 
 ## 🚀 Quick Start
 
@@ -38,18 +39,18 @@ cp .env.example .env
 docker-compose up -d
 ```
 
-The application will be available at `http://localhost:9090`
+The API will be available at `http://localhost:9090`
 
 ### Local Development
 
 ```bash
-# Ensure Java 17+ and Maven are installed
-./mvnw spring-boot:run
+# Ensure Java 21+ and Maven are installed
+mvn spring-boot:run
 ```
 
 ## 📚 Documentation
 
-- 📖 [API Documentation](API%20Documentation.md) - Complete API reference
+- 📖 [API Documentation](API%20Documentation.md) - Complete API reference with all endpoints
 - 🚀 [Deployment Guide](DEPLOYMENT.md) - Deployment instructions for various platforms
   - Docker & Docker Compose
   - Heroku
@@ -65,13 +66,12 @@ The application will be available at `http://localhost:9090`
 
 ## 🛠️ Technology Stack
 
-- **Java 17** - Core backend development
+- **Java 21** - Core backend development
 - **Spring Boot 3.5** - Application framework
 - **Spring Security** - Authentication & authorization
 - **OAuth2** - Social login (Google & GitHub)
 - **Spring Data JPA** - Data persistence
-- **Neon DB** - Serverless PostgreSQL-compatible database (primary)
-- **Thymeleaf** - Server-side templates
+- **Neon PostgreSQL** - Serverless PostgreSQL-compatible database (primary)
 - **Docker** - Containerization
 - **Maven** - Dependency management
 
@@ -79,7 +79,7 @@ The application will be available at `http://localhost:9090`
 
 ### Prerequisites
 
-- Java JDK 17 or higher
+- Java JDK 21 or higher
 - Maven 3.6+ (or use included Maven wrapper)
 - [Neon Database](https://neon.tech) account (recommended) or Docker Compose for local development
 - OAuth2 credentials from Google and GitHub
@@ -108,10 +108,10 @@ See [DEPLOYMENT.md](DEPLOYMENT.md) for detailed configuration instructions.
 
 ```bash
 # Build the application
-./mvnw clean package
+mvn clean package
 
 # Run tests
-./mvnw test
+mvn test
 
 # Run the JAR
 java -jar target/Trip-MateV2-0.0.1-SNAPSHOT.jar
@@ -156,11 +156,12 @@ docker-compose down
 ## 📊 API Endpoints
 
 ### Authentication
-- `GET /login` - Login page
-- `GET /api/test/public` - Public endpoint
-- `GET /api/test/private` - Protected endpoint
+- `GET /auth/user` - Get current authenticated user details
+- `GET /auth/logout` - Logout endpoint
+- `GET /api/test/public` - Public test endpoint
+- `GET /api/test/private` - Protected test endpoint
 
-### Resources
+### Resources (All RESTful CRUD operations)
 - `/api/users` - User management
 - `/api/preferences` - User preferences
 - `/api/trips` - Trip history
@@ -170,7 +171,7 @@ docker-compose down
 - `/api/budgets` - Budget ranges
 - `/api/recommendations` - Travel recommendations
 
-See [API Documentation](API%20Documentation.md) for complete endpoint details.
+See [API Documentation](API%20Documentation.md) for complete endpoint details, request/response formats, and examples.
 
 ## 🔍 Monitoring
 
