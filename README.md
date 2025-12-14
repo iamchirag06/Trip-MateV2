@@ -1,7 +1,7 @@
 # 🌎 Trip-MateV2 - Backend API
 
 [![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.5-brightgreen.svg)](https://spring.io/projects/spring-boot)
-[![Java](https://img.shields.io/badge/Java-21-orange.svg)](https://www.java.com)
+[![Java](https://img.shields.io/badge/Java-17-orange.svg)](https://www.java.com)
 [![Docker](https://img.shields.io/badge/Docker-Ready-blue.svg)](https://www.docker.com/)
 [![OAuth2](https://img.shields.io/badge/OAuth2-Authentication-green.svg)](https://oauth.net/2/)
 [![CI/CD](https://img.shields.io/badge/CI%2FCD-GitHub%20Actions-blue.svg)](https://github.com/iamchirag06/Trip-MateV2/actions)
@@ -66,7 +66,7 @@ mvn spring-boot:run
 
 ## 🛠️ Technology Stack
 
-- **Java 21** - Core backend development
+- **Java 17** - Core backend development
 - **Spring Boot 3.5** - Application framework
 - **Spring Security** - Authentication & authorization
 - **OAuth2** - Social login (Google & GitHub)
@@ -79,7 +79,7 @@ mvn spring-boot:run
 
 ### Prerequisites
 
-- Java JDK 21 or higher
+- Java JDK 17 or higher
 - Maven 3.6+ (or use included Maven wrapper)
 - [Neon Database](https://neon.tech) account (recommended) or Docker Compose for local development
 - OAuth2 credentials from Google and GitHub

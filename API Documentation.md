@@ -1,7 +1,7 @@
 # 🌎 Trip-MateV2 Backend API Documentation
 
 [![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.5-brightgreen.svg)](https://spring.io/projects/spring-boot)
-[![Java](https://img.shields.io/badge/Java-21-orange.svg)](https://www.java.com)
+[![Java](https://img.shields.io/badge/Java-17-orange.svg)](https://www.java.com)
 [![OAuth2](https://img.shields.io/badge/OAuth2-Authentication-green.svg)](https://oauth.net/2/)
 [![License](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
@@ -355,7 +355,7 @@ DELETE /api/recommendations/{id}     # Delete a recommendation
 
 ## 🛠️ Technology Stack
 
-- ![Java](https://img.shields.io/badge/Java-21-orange) Backend development
+- ![Java](https://img.shields.io/badge/Java-17-orange) Backend development
 - ![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.5-brightgreen) Application framework
 - ![JPA](https://img.shields.io/badge/JPA-Hibernate-red) Data persistence
 - ![REST](https://img.shields.io/badge/REST-API-yellow) API architecture
